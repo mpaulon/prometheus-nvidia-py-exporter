@@ -46,9 +46,9 @@ class AppMetrics:
         self.num_devices.set(nb_devices)
         for i in range(nb_devices):
             handle = nvmlDeviceGetHandleByIndex(i)
-            name = nvmlDeviceGetName(handle).encode("utf-8")
+            name = nvmlDeviceGetName(handle).decode("utf-8")
             minor = nvmlDeviceGetMinorNumber(handle)
-            uuid = nvmlDeviceGetUUID(handle).encode("utf-8")
+            uuid = nvmlDeviceGetUUID(handle).decode("utf-8")
             labels = [minor, uuid, name]
             memory = nvmlDeviceGetMemoryInfo(handle)
             self.used_memory.labels(*labels).set(memory.used)
