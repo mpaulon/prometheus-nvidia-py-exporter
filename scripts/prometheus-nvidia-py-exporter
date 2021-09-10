@@ -2,4 +2,4 @@
 import prometheus_nvidia_py_exporter
 
 if __name__ == "__main__":
-    prometheus_nvidia_exporter.core.main()
+    prometheus_nvidia_py_exporter.core.main()
