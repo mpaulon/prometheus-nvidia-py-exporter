@@ -8,7 +8,7 @@ from pynvml import (
     nvmlInit, nvmlDeviceGetCount, nvmlDeviceGetHandleByIndex, nvmlDeviceGetName,
     nvmlDeviceGetMinorNumber, nvmlDeviceGetUUID, nvmlDeviceGetMemoryInfo,
     nvmlDeviceGetUtilizationRates, nvmlDeviceGetPowerUsage, nvmlDeviceGetTemperature,
-    nvmlDeviceGetFanSpeed,
+    nvmlDeviceGetFanSpeed, NVML_TEMPERATURE_GPU
 )
 
 class AppMetrics:
@@ -55,7 +55,7 @@ class AppMetrics:
             self.total_memory.labels(*labels).set(memory.total)
             self.duty_cycle.labels(*labels).set(nvmlDeviceGetUtilizationRates(handle).gpu)
             self.power_usage.labels(*labels).set(nvmlDeviceGetPowerUsage(handle))
-            self.temperature.labels(*labels).set(nvmlDeviceGetTemperature(handle))
+            self.temperature.labels(*labels).set(nvmlDeviceGetTemperature(handle, NVML_TEMPERATURE_GPU))
             self.fan_speed.labels(*labels).set(nvmlDeviceGetFanSpeed(handle))
 
 def main():
