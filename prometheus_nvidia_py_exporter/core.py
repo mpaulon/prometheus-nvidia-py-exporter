@@ -5,7 +5,7 @@ import time
 
 from prometheus_client import start_http_server, Gauge
 from pynvml import (
-    nvmlInit, nvmlUnitGetDeviceCount, nvmlDeviceGetHandleByIndex, nvmlDeviceGetName,
+    nvmlInit, nvmlDeviceGetCount, nvmlDeviceGetHandleByIndex, nvmlDeviceGetName,
     nvmlDeviceGetMinorNumber, nvmlDeviceGetUUID, nvmlDeviceGetMemoryInfo,
     nvmlDeviceGetUtilizationRates, nvmlDeviceGetPowerUsage, nvmlDeviceGetTemperature,
     nvmlDeviceGetFanSpeed,
@@ -42,7 +42,7 @@ class AppMetrics:
         new values.
         """
         nvmlInit()
-        self.num_devices.set(nvmlDeviceGetCount())
+        self.num_devices.set(nvmlUnitGetDeviceCount())
         for i in range(self.num_devices):
             handle = nvmlDeviceGetHandleByIndex(i)
             name = nvmlDeviceGetName(handle)
