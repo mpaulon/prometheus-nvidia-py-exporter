@@ -42,8 +42,9 @@ class AppMetrics:
         new values.
         """
         nvmlInit()
-        self.num_devices.set(nvmlDeviceGetCount())
-        for i in range(self.num_devices):
+        nb_devices = nvmlDeviceGetCount()
+        self.num_devices.set(nb_devices)
+        for i in range(nb_devices):
             handle = nvmlDeviceGetHandleByIndex(i)
             name = nvmlDeviceGetName(handle)
             minor = nvmlDeviceGetMinorNumber(handle)
