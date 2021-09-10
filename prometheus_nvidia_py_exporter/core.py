@@ -51,9 +51,9 @@ class AppMetrics:
             uuid = nvmlDeviceGetUUID(handle)
             labels = [minor, uuid, name]
             memory = nvmlDeviceGetMemoryInfo(handle)
-            self.used_memory.labels(*labels).set(memory[1])
-            self.total_memory.labels(*labels).set(memory[0])
-            self.duty_cycle.labels(*labels).set(nvmlDeviceGetUtilizationRates(handle)[0])
+            self.used_memory.labels(*labels).set(memory.used)
+            self.total_memory.labels(*labels).set(memory.total)
+            self.duty_cycle.labels(*labels).set(nvmlDeviceGetUtilizationRates(handle).gpu)
             self.power_usage.labels(*labels).set(nvmlDeviceGetPowerUsage(handle))
             self.temperature.labels(*labels).set(nvmlDeviceGetTemperature(handle))
             self.fan_speed.labels(*labels).set(nvmlDeviceGetFanSpeed(handle))
