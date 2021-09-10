@@ -21,13 +21,13 @@ class AppMetrics:
         self.polling_interval_seconds = polling_interval_seconds
         self.labels = ["minor_number", "uuid", "name"]
         # Prometheus metrics to collect
-        self.num_devices = Gauge("num_devices", "Number of GPU devices")
-        self.used_memory = Gauge("memory_used_bytes", "Memory used by the GPU device in bytes", self.labels)
-        self.total_memory = Gauge("memory_total_bytes", "Total memory of the GPU device in bytes", self.labels)
-        self.duty_cycle = Gauge("duty_cycle", "Percent of time over the past sample period during which one or more kernels were executing on the GPU device", self.labels)
-        self.power_usage = Gauge("power_usage_milliwatts", "Power usage of the GPU device in milliwatts", self.labels)
-        self.temperature = Gauge("temperature_celsius", "Temperature of the GPU device in celsius", self.labels)
-        self.fan_speed = Gauge("fanspeed_percent", "Fanspeed of the GPU device as a percent of its maximum", self.labels)
+        self.num_devices = Gauge("nvidia_num_devices", "Number of GPU devices")
+        self.used_memory = Gauge("nvidia_memory_used_bytes", "Memory used by the GPU device in bytes", self.labels)
+        self.total_memory = Gauge("nvidia_memory_total_bytes", "Total memory of the GPU device in bytes", self.labels)
+        self.duty_cycle = Gauge("nvidia_duty_cycle", "Percent of time over the past sample period during which one or more kernels were executing on the GPU device", self.labels)
+        self.power_usage = Gauge("nvidia_power_usage_milliwatts", "Power usage of the GPU device in milliwatts", self.labels)
+        self.temperature = Gauge("nvidia_temperature_celsius", "Temperature of the GPU device in celsius", self.labels)
+        self.fan_speed = Gauge("nvidia_fanspeed_percent", "Fanspeed of the GPU device as a percent of its maximum", self.labels)
 
     def run_metrics_loop(self):
         """Metrics fetching loop"""
@@ -46,9 +46,9 @@ class AppMetrics:
         self.num_devices.set(nb_devices)
         for i in range(nb_devices):
             handle = nvmlDeviceGetHandleByIndex(i)
-            name = nvmlDeviceGetName(handle)
+            name = nvmlDeviceGetName(handle).encode("utf-8")
             minor = nvmlDeviceGetMinorNumber(handle)
-            uuid = nvmlDeviceGetUUID(handle)
+            uuid = nvmlDeviceGetUUID(handle).encode("utf-8")
             labels = [minor, uuid, name]
             memory = nvmlDeviceGetMemoryInfo(handle)
             self.used_memory.labels(*labels).set(memory.used)
