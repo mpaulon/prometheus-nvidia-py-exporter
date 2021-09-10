@@ -1,5 +1,5 @@
 #! /usr/bin/env python3
-import prometheus_nvidia_py_exporter
+from prometheus_nvidia_py_exporter.core import main
 
 if __name__ == "__main__":
-    prometheus_nvidia_py_exporter.core.main()
+    main()
