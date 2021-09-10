@@ -62,7 +62,7 @@ def main():
     """Main entry point"""
 
     polling_interval_seconds = int(os.getenv("POLLING_INTERVAL_SECONDS", "5"))
-    exporter_port = int(os.getenv("EXPORTER_PORT", "9877"))
+    exporter_port = int(os.getenv("EXPORTER_PORT", "9102"))
 
     app_metrics = AppMetrics(
         polling_interval_seconds=polling_interval_seconds
