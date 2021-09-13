@@ -1,0 +1,14 @@
+[Unit]
+Description=Prometheus exporter for nvidia GPUs metrics
+Documentation=https://github.com/mpaulon/prometheus-nvidia-py-exporter
+[Service]
+Restart=on-failure
+User=node_exporter
+EnvironmentFile=/etc/default/prometheus-nvidia-py-exporter
+ExecStart=/srv/prometheus_nvidia_py_exporter/env/bin/prometheus_nvidia_py_exporter $ARGS
+ExecReload=/bin/kill -HUP $MAINPID
+TimeoutStopSec=20s
+SendSIGKILL=no
+
+[Install]
+WantedBy=multi-user.target
