@@ -59,12 +59,15 @@ class AppMetrics:
             self.temperature.labels(*labels).set(pynvml.nvmlDeviceGetTemperature(handle, pynvml.NVML_TEMPERATURE_GPU))
             self.fan_speed.labels(*labels).set(pynvml.nvmlDeviceGetFanSpeed(handle))
 
+            self.compute_process_memory.clear()
             for p in pynvml.nvmlDeviceGetComputeRunningProcesses(handle):
                 p_labels = [p.pid, pynvml.nvmlSystemGetProcessName(p.pid).decode()]
                 self.compute_process_memory.labels(*labels, *p_labels).set(p.usedGpuMemory)
+            self.graphics_process_memory.clear()
             for p in pynvml.nvmlDeviceGetGraphicsRunningProcesses(handle):
                 p_labels = [p.pid, pynvml.nvmlSystemGetProcessName(p.pid).decode()]
                 self.graphics_process_memory.labels(*labels, *p_labels).set(p.usedGpuMemory)
+            self.MPScompute_process_memory.clear()
             for p in pynvml.nvmlDeviceGetMPSComputeRunningProcesses(handle):
                 p_labels = [p.pid, pynvml.nvmlSystemGetProcessName(p.pid).decode()]
                 self.MPScompute_process_memory.labels(*labels, *p_labels).set(p.usedGpuMemory)
