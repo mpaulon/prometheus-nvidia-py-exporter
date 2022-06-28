@@ -25,9 +25,9 @@ class AppMetrics:
         self.temperature = prometheus_client.Gauge("nvidia_temperature_celsius", "Temperature of the GPU device in celsius", self.labels)
         self.fan_speed = prometheus_client.Gauge("nvidia_fanspeed_percent", "Fanspeed of the GPU device as a percent of its maximum", self.labels)
 
-        self.compute_process_memory = prometheus_client.Gauge("nvidia_compute_process_memory", "Memory used by compute process", self.labels + ["process_name", "process_id"])
-        self.graphics_process_memory = prometheus_client.Gauge("nvidia_graphics_process_memory", "Memory used by graphics process", self.labels + ["process_name", "process_id"])
-        self.MPScompute_process_memory = prometheus_client.Gauge("nvidia_MPScompute_process_memory", "Memory used by MPS compute process", self.labels + ["process_name", "process_id"])
+        self.compute_process_memory = prometheus_client.Gauge("nvidia_compute_process_memory", "Memory used by compute process", self.labels + ["process_id", "process_name"])
+        self.graphics_process_memory = prometheus_client.Gauge("nvidia_graphics_process_memory", "Memory used by graphics process", self.labels + ["process_id", "process_name"])
+        self.MPScompute_process_memory = prometheus_client.Gauge("nvidia_MPScompute_process_memory", "Memory used by MPS compute process", self.labels + ["process_id", "process_name"])
 
     def run_metrics_loop(self):
         """Metrics fetching loop"""
