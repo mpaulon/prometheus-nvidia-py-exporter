@@ -25,6 +25,10 @@ class AppMetrics:
         self.temperature = prometheus_client.Gauge("nvidia_temperature_celsius", "Temperature of the GPU device in celsius", self.labels)
         self.fan_speed = prometheus_client.Gauge("nvidia_fanspeed_percent", "Fanspeed of the GPU device as a percent of its maximum", self.labels)
 
+        self.compute_process_memory = prometheus_client.Gauge("nvidia_compute_process_memory", "Memory used by compute process", self.labels + ["process_name", "process_id"])
+        self.graphics_process_memory = prometheus_client.Gauge("nvidia_graphics_process_memory", "Memory used by graphics process", self.labels + ["process_name", "process_id"])
+        self.MPScompute_process_memory = prometheus_client.Gauge("nvidia_MPScompute_process_memory", "Memory used by MPS compute process", self.labels + ["process_name", "process_id"])
+
     def run_metrics_loop(self):
         """Metrics fetching loop"""
 
@@ -54,6 +58,16 @@ class AppMetrics:
             self.power_usage.labels(*labels).set(pynvml.nvmlDeviceGetPowerUsage(handle))
             self.temperature.labels(*labels).set(pynvml.nvmlDeviceGetTemperature(handle, pynvml.NVML_TEMPERATURE_GPU))
             self.fan_speed.labels(*labels).set(pynvml.nvmlDeviceGetFanSpeed(handle))
+
+            for p in pynvml.nvmlDeviceGetComputeRunningProcesses(handle):
+                p_labels = [p.pid, pynvml.nvmlSystemGetProcessName(p.pid).decode()]
+                self.compute_process_memory.labels(*labels, *p_labels).set(p.usedGpuMemory)
+            for p in pynvml.nvmlDeviceGetGraphicsRunningProcesses(handle):
+                p_labels = [p.pid, pynvml.nvmlSystemGetProcessName(p.pid).decode()]
+                self.graphics_process_memory.labels(*labels, *p_labels).set(p.usedGpuMemory)
+            for p in pynvml.nvmlDeviceGetMPSComputeRunningProcesses(handle):
+                p_labels = [p.pid, pynvml.nvmlSystemGetProcessName(p.pid).decode()]
+                self.MPScompute_process_memory.labels(*labels, *p_labels).set(p.usedGpuMemory)
 
 def main():
     """Main entry point"""

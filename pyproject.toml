@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "prometheus_nvidia_py_exporter"
-version = "1.1"
+version = "1.2"
 description = "Prometheus exporter for nvidia GPU metrix written in python"
 license = "MIT"
 
