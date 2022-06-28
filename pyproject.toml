@@ -1,0 +1,30 @@
+[tool.poetry]
+name = "prometheus_nvidia_py_exporter"
+version = "1.1"
+description = "Prometheus exporter for nvidia GPU metrix written in python"
+license = "MIT"
+
+authors = [
+    "Michaël PAULON <michael@paulon.org>"
+]
+
+packages = [
+]
+
+include = [ 
+]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+prometheus_client = "*"
+pynvml = "*"
+
+[tool.poetry.urls]
+repository = "https://github.com/mpaulon/prometheus-nvidia-py-exporter"
+
+[tool.poetry.scripts]
+prometheus_nvidia_py_exporter = "prometheus_nvidia_py_exporter.core:main"
+
+[build-system]
+requires = ["poetry_core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
