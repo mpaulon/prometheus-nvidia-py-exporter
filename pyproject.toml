@@ -14,7 +14,7 @@ classifiers = ["Programming Language :: Python :: 3"]
 dynamic = ["version", "dependencies", "optional-dependencies"]
 
 [project.scripts]
-prometheus_nvidia_py_exporter = "prometheus_nvidia_py_exporter.core:main"
+prometheus-nvidia-py-exporter = "prometheus_nvidia_py_exporter.core:main"
 
 [tool.setuptools]
 license-files = ["LICENSE.md"]
