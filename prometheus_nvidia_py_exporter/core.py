@@ -89,15 +89,15 @@ class AppMetrics:
             self.fan_speed.labels(*labels).set(pynvml.nvmlDeviceGetFanSpeed(handle))
 
             for p in pynvml.nvmlDeviceGetComputeRunningProcesses(handle):
-                p_labels = [p.pid, pynvml.nvmlSystemGetProcessName(p.pid).decode()]
+                p_labels = [p.pid, pynvml.nvmlSystemGetProcessName(p.pid)]
                 self.compute_process_memory.labels(*labels, *p_labels).set(p.usedGpuMemory)
 
             for p in pynvml.nvmlDeviceGetGraphicsRunningProcesses(handle):
-                p_labels = [p.pid, pynvml.nvmlSystemGetProcessName(p.pid).decode()]
+                p_labels = [p.pid, pynvml.nvmlSystemGetProcessName(p.pid)]
                 self.graphics_process_memory.labels(*labels, *p_labels).set(p.usedGpuMemory)
 
             for p in pynvml.nvmlDeviceGetMPSComputeRunningProcesses(handle):
-                p_labels = [p.pid, pynvml.nvmlSystemGetProcessName(p.pid).decode()]
+                p_labels = [p.pid, pynvml.nvmlSystemGetProcessName(p.pid)]
                 self.MPScompute_process_memory.labels(*labels, *p_labels).set(p.usedGpuMemory)
 
 
