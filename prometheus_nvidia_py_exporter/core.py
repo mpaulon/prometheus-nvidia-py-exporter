@@ -76,8 +76,8 @@ class AppMetrics:
             handle = pynvml.nvmlDeviceGetHandleByIndex(i)
             labels = [
                 pynvml.nvmlDeviceGetMinorNumber(handle),
-                pynvml.nvmlDeviceGetUUID(handle).decode("utf-8"),
-                pynvml.nvmlDeviceGetName(handle).decode("utf-8"),
+                pynvml.nvmlDeviceGetUUID(handle),
+                pynvml.nvmlDeviceGetName(handle),
             ]
             memory = pynvml.nvmlDeviceGetMemoryInfo(handle)
 
